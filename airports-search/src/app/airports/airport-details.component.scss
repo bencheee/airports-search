@@ -1,0 +1,15 @@
+label {
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+.response-message {
+	display: none;
+	margin-top: 20px;
+	text-align: center;
+	color: green;
+
+	&.show {
+		display: block;
+	}
+}

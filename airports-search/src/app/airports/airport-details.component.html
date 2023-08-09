@@ -1,0 +1,37 @@
+<div class="container">
+	<h1 class="text-center mt-4">Detalji o zračnoj luci</h1>
+
+	<form class="w-75 mx-auto" [formGroup]="form" (ngSubmit)="onSubmit()">
+		<div class="mb-2">
+			<label for="id" class="form-label">ID</label>
+			<input formControlName="id" type="text" id="id" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="name" class="form-label">Naziv</label>
+			<input formControlName="name" type="text" id="name" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="cityCode" class="form-label">Grad (skraćeno)</label>
+			<input formControlName="cityCode" type="text" id="cityCode" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="countryName" class="form-label">Država</label>
+			<input formControlName="countryName" type="text" id="countryName" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="regionCode" class="form-label">Regija</label>
+			<input formControlName="regionCode" type="text" id="regionCode" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="customLabel" class="form-label">Prilagođeno ime</label>
+			<input formControlName="customLabel" type="text" id="customLabel" class="form-control">
+		</div>
+		<div class="mb-2">
+			<label for="score" class="form-label">Ocjena</label>
+			<input formControlName="score" type="text" id="score" class="form-control">
+		</div>
+		<button type="submit" class="btn btn-primary mt-3">Spremi</button>
+		<a routerLink="/" class="btn btn-secondary mt-3 ms-2">Nazad</a>
+	</form>
+	<div class="response-message" [class.show]="formSaved">Podaci su uspješno spremljeni</div>
+</div>
