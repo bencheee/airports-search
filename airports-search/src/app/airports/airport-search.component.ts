@@ -27,7 +27,7 @@ export class AirportSearchComponent implements OnInit, OnDestroy {
 		this.subscription = fromEvent(this.textInput.nativeElement, 'input')
 			.pipe(
 				map((event) => (event.target as HTMLInputElement).value),
-				debounceTime(1000),
+				debounceTime(300),
 				distinctUntilChanged(),
 				tap(() => this.isSearching = true),
 				concatMap(searchQuery => {
