@@ -8,13 +8,15 @@
 			</div>
 		</div>
 		<div class="search-results">
-			<div *ngIf="isSearching">...loading...</div>
-			<ul class="result-items">
-				<li *ngFor="let airport of airports" class="result-item">
-					<span>{{ airport.detailedName }}</span>
-					<a [routerLink]="['/details', airport.id]" class="btn btn-primary btn-sm ms-3">Detalji</a>
-				</li>
-			</ul>
+			<div *ngIf="isSearching; else searchResults">...loading...</div>
+			<ng-template #searchResults>
+				<ul class="result-items">
+					<li *ngFor="let airport of airports" class="result-item">
+						<span>{{ airport.detailedName }}</span>
+						<a [routerLink]="['/details', airport.id]" class="btn btn-primary btn-sm ms-3">Detalji</a>
+					</li>
+				</ul>
+			</ng-template>
 		</div>
 	</div>
 </div>
