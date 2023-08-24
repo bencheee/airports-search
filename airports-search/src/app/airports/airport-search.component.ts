@@ -3,7 +3,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { Subscription, concatMap, debounceTime, distinctUntilChanged, fromEvent, map, of, tap } from 'rxjs';
 
 import { AirportsService } from '../backend-api/airports.service';
-import { AirportDetails } from '../backend-api/interfaces.i';
+import { AirportDetails, TopAirport } from '../backend-api/interfaces.i';
 import { WarningMessages } from '../constants';
 
 @Component({
@@ -13,18 +13,20 @@ import { WarningMessages } from '../constants';
 })
 export class AirportSearchComponent implements OnInit, OnDestroy {
 
-	private subscription!: Subscription;
+	private getAirportDetails!: Subscription;
+	private getTopTenAirports!: Subscription;
 
 	protected airports: AirportDetails[] | undefined = undefined;
 	protected isSearching = false;
 	protected warningMessage: string | null = WarningMessages.EmptyQuery;
+	protected topTenAirports?: TopAirport[];
 
 	@ViewChild('textInput', { static: true }) private textInput!: ElementRef<HTMLInputElement>;
 
 	constructor(private airportsService: AirportsService) { }
 
 	ngOnInit() {
-		this.subscription = fromEvent(this.textInput.nativeElement, 'input')
+		this.getAirportDetails = fromEvent(this.textInput.nativeElement, 'input')
 			.pipe(
 				map((event) => (event.target as HTMLInputElement).value),
 				debounceTime(300),
@@ -42,9 +44,14 @@ export class AirportSearchComponent implements OnInit, OnDestroy {
 				this.airports = airportDetails?.data;
 				this.warningMessage = airportDetails ? (airportDetails.data.length ? null : WarningMessages.NoResults) : WarningMessages.EmptyQuery;
 			})
+
+		this.getTopTenAirports = this.airportsService.getTopAirports.subscribe(topAirports => {
+			this.topTenAirports = topAirports?.slice(0, 10);
+		});
 	}
 
 	ngOnDestroy() {
-		this.subscription.unsubscribe();
+		this.getAirportDetails.unsubscribe();
+		this.getTopTenAirports.unsubscribe();
 	}
 }

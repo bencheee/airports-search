@@ -6,13 +6,22 @@
 			<div class="warning-message">
 				<span *ngIf="warningMessage">{{ warningMessage }}</span>
 			</div>
+			<aside class="top-airports">
+				<h2 class="text-center">TOP PRETRAGE</h2>
+				<ol *ngIf="topTenAirports; else noSearches">
+					<li *ngFor="let airport of topTenAirports">{{ airport.detailedName }}</li>
+				</ol>
+				<ng-template #noSearches>
+					<div class="no-searches">Još nema pretraga</div>
+				</ng-template>
+			</aside>
 		</div>
 		<div class="search-results">
 			<div *ngIf="isSearching; else searchResults">...loading...</div>
 			<ng-template #searchResults>
 				<ul class="result-items">
 					<li *ngFor="let airport of airports" class="result-item">
-						<span>{{ airport.detailedName }}</span>
+						<span [ngStyle]="{'color': airport.topTen ? 'red' : 'black' }">{{ airport.detailedName }}</span>
 						<a [routerLink]="['/details', airport.id]" class="btn btn-primary btn-sm ms-3">Detalji</a>
 					</li>
 				</ul>

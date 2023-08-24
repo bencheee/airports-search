@@ -35,5 +35,11 @@ export interface AirportDetails {
       };
   };
   customLabel?: string;
+  topTen?: boolean;
+}
 
+export interface TopAirport {
+  id: string;
+  detailedName: string;
+  count: number;
 }
